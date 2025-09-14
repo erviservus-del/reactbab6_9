@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <title>React Bab 8 - Kumpulan Latihan 1 sampai 35</title>
+    <style>
+        body {
+            background: #fafbfc;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0; padding: 0;
+        }
+        .wrap {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        h1, h2, h3, p {
+            text-align: center;
+            color: #273567;
+            margin: 5px 0;
+        }
+        .bab-section {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 32px;
+            padding: 28px;
+        }
+        button {
+            background:#fff;
+            cursor:pointer;
+            padding:10px 20px;
+            font-weight:bold;
+            border:1px solid gray;
+            box-shadow: 2px 2px 2px black;
+            margin:10px;
+            border-radius:6px;
+            user-select:none;
+        }
+        button:hover {
+            box-shadow:1px 1px 1px black;
+            background:#f1f1f1;
+        }
+        .mahasiswa-img {
+            border-radius:12px;
+            box-shadow:0 0 20px rgba(40,40,40,0.25);
+            width:150px;
+            height:170px;
+            object-fit:cover;
+            margin:10px auto;
+            display:block;
+        }
+        figcaption {
+            text-align:center;
+            background:gainsboro;
+            padding:7px 15px;
+            margin:10px 0;
+            box-shadow:6px 6px 0 #aaa;
+            border-radius:6px;
+            user-select:none;
+        }
+        .counter {
+            font-size:3em;
+            background:gainsboro;
+            margin:15px auto;
+            padding:10px 0;
+            text-align:center;
+            width:120px;
+            border-radius:12px;
+            user-select:none;
+        }
+        .bg-toggle {
+            height:120px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            border-radius:7px;
+            user-select:none;
+            margin: 0 auto 10px;
+            width: 250px;
+        }
+        .hijau { background-color: lightgreen; }
+        .merah { background-color: lightcoral; }
+        .flex-btns {
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:center;
+            gap:10px;
+        }
+        .section-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div class="wrap">
+        <h1>React Bab 8 - Kumpulan Latihan 1 sampai 35</h1>
+        <div id="root"></div>
+    </div>
+
+    <script type="text/babel">
+
+    // ===============================================
+    // Data Mahasiswa
+    // ===============================================
+    const mahasiswas = [
+        {id:"01",nama:"Eka",jurusan:"Teknik Informatika",pasFoto:"https://randomuser.me/api/portraits/men/32.jpg"},
+        {id:"02",nama:"Lisa",jurusan:"Sistem Informasi",pasFoto:"https://randomuser.me/api/portraits/women/44.jpg"},
+        {id:"03",nama:"Rudi",jurusan:"Teknik Elektro",pasFoto:"https://randomuser.me/api/portraits/men/35.jpg"}
+    ];
+
+    // ===============================================
+    // Komponen Mahasiswa (Child Component)
+    // ===============================================
+    function Mahasiswa(props) {
+        return (
+            <figure>
+                <img className="mahasiswa-img" src={props.mahasiswa.pasFoto} alt={props.mahasiswa.nama} />
+                <figcaption>{props.mahasiswa.nama} ({props.mahasiswa.jurusan})</figcaption>
+            </figure>
+        );
+    }
+
+    // ===============================================
+    // Komponen-komponen Latihan 1 - 35
+    // ===============================================
+
+    // 01. Normal Alert
+    class Latihan01 extends React.Component {
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>01. Normal Alert</h2>
+                    <h3>Belajar React</h3>
+                    <button onClick={() => alert("Hello React")}>Click me</button>
+                </div>
+            );
+        }
+    }
+
+    // 02. Try Change Data (tanpa state)
+    class Latihan02 extends React.Component {
+        constructor() { super(); this.judul="Belajar React"; }
+        handleClick = () => { this.judul="Belajar JavaScript"; }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>02. Try Change Data (tanpa state)</h2>
+                    <h3>{this.judul}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                    <p style={{fontStyle:"italic", color:"gray", fontSize:12}}>Judul tidak berubah karena bukan state.</p>
+                </div>
+            );
+        }
+    }
+
+    // 03. Try Change Data & Log
+    class Latihan03 extends React.Component {
+        constructor() { super(); this.judul="Belajar React"; }
+        handleClick = () => { console.log("Before:", this.judul); this.judul="Belajar JavaScript"; console.log("After:", this.judul); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>03. Try Change Data & Log</h2>
+                    <h3>{this.judul}</h3>
+                    <button onClick={this.handleClick}>Click me (Check console)</button>
+                </div>
+            );
+        }
+    }
+
+    // 04. React State
+    class Latihan04 extends React.Component {
+        constructor() { super(); this.state={judul:"Belajar React"}; }
+        handleClick = () => { this.setState({judul:"Belajar JavaScript"}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>04. React State</h2>
+                    <h3>{this.state.judul}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                </div>
+            );
+        }
+    }
+
+    // 05. State Render
+    class Latihan05 extends React.Component {
+        constructor() { super(); this.state={judul:"Belajar React"}; }
+        handleClick = () => { this.setState({judul:"Belajar JavaScript"}); }
+        render() {
+            console.log(`Latihan 05: Render di proses... isi state judul = ${this.state.judul}`);
+            return (
+                <div className="section-content">
+                    <h2>05. State Render</h2>
+                    <h3>{this.state.judul}</h3>
+                    <button onClick={this.handleClick}>Click me (Check console)</button>
+                </div>
+            );
+        }
+    }
+    
+    // 06. State Render If
+    class Latihan06 extends React.Component {
+        constructor() { super(); this.state={judul:"Belajar React"}; }
+        handleClick = () => { 
+            if (this.state.judul !== "Belajar JavaScript") {
+                this.setState({ judul: "Belajar JavaScript" });
+            }
+        }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>06. State Render If</h2>
+                    <h3>{this.state.judul}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                </div>
+            );
+        }
+    }
+    
+    // 07. State Render Toggle
+    class Latihan07 extends React.Component {
+        constructor() { super(); this.state={judul:"Belajar React"}; }
+        handleClick = () => {
+            if (this.state.judul === "Belajar React") {
+                this.setState({ judul: "Belajar JavaScript" });
+            } else {
+                this.setState({ judul: "Belajar React" });
+            }
+        }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>07. State Render Toggle</h2>
+                    <h3>{this.state.judul}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                </div>
+            );
+        }
+    }
+    
+    // 08. Change Value JS (Bukan React)
+    class Latihan08 extends React.Component {
+        componentDidMount() {
+            const h1Node = document.getElementById("judul-latihan08");
+            const handleButtonClick = () => {
+                h1Node.innerHTML = "Belajar JavaScript";
+            };
+            document.getElementById("btn-latihan08").onclick = handleButtonClick;
+        }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>08. Change Value JS (Bukan React)</h2>
+                    <h3 id="judul-latihan08">Belajar React</h3>
+                    <button id="btn-latihan08">Click me</button>
+                </div>
+            );
+        }
+    }
+
+    // 09. State Declaration
+    class Latihan09 extends React.Component {
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>09. State Declaration</h2>
+                    <h3>{/* {this.state.judul} tidak bisa diakses di sini */}</h3>
+                    <p style={{fontStyle:"italic", color:"gray", fontSize:12}}>State harus dideklarasikan di constructor</p>
+                </div>
+            );
+        }
+    }
+
+    // 10. State In Event Inline
+    class Latihan10 extends React.Component {
+        constructor() { super(); this.state={judul:"Belajar React"}; }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>10. State In Event Inline</h2>
+                    <h3>{this.state.judul}</h3>
+                    <button onClick={() => this.setState({ judul: "Belajar JavaScript" })}>Click me</button>
+                </div>
+            );
+        }
+    }
+    
+    // 11. State Access Problem
+    class Latihan11 extends React.Component {
+        constructor() { super(); this.state={counter:0}; }
+        handleInc = () => {
+            console.log("Latihan 11 - before:", this.state.counter);
+            this.setState({ counter: this.state.counter + 1 });
+            console.log("Latihan 11 - after:", this.state.counter);
+        }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>11. State Access Problem</h2>
+                    <div className="counter">{this.state.counter}</div>
+                    <button onClick={this.handleInc}>+1 (Check console)</button>
+                    <p style={{fontStyle:"italic", color:"gray", fontSize:12}}>setState bersifat asynchronous</p>
+                </div>
+            );
+        }
+    }
+    
+    // 12. State Access Solution (Updater Function)
+    class Latihan12 extends React.Component {
+        constructor() { super(); this.state={counter:0}; }
+        handleInc = () => {
+            this.setState((prevState) => {
+                console.log("Latihan 12 - updater:", prevState.counter);
+                return { counter: prevState.counter + 1 };
+            });
+        }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>12. State Access Solution</h2>
+                    <div className="counter">{this.state.counter}</div>
+                    <button onClick={this.handleInc}>+1 (Check console)</button>
+                    <p style={{fontStyle:"italic", color:"gray", fontSize:12}}>Gunakan updater function</p>
+                </div>
+            );
+        }
+    }
+    
+    // 13. Membuat 2 State
+    class Latihan13 extends React.Component {
+        constructor() { super(); this.state={judul1:"Belajar React", judul2:"Belajar JavaScript"}; }
+        handleClick = () => { this.setState({judul1:"Belajar React State"}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>13. Membuat 2 State</h2>
+                    <h3>{this.state.judul1}</h3>
+                    <h3>{this.state.judul2}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                </div>
+            );
+        }
+    }
+    
+    // 14. Mengupdate 2 State
+    class Latihan14 extends React.Component {
+        constructor() { super(); this.state={judul1:"Belajar React", judul2:"Belajar JavaScript"}; }
+        handleClick = () => { this.setState({judul1:"Belajar React State", judul2:"Belajar Programming"}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>14. Mengupdate 2 State</h2>
+                    <h3>{this.state.judul1}</h3>
+                    <h3>{this.state.judul2}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                </div>
+            );
+        }
+    }
+    
+    // 15. State Object Value
+    class Latihan15 extends React.Component {
+        constructor() { super(); this.state={judul:{satu:"Belajar React", dua:"Belajar JavaScript"}}; }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>15. State Object Value</h2>
+                    <h3>{this.state.judul.satu}</h3>
+                    <h3>{this.state.judul.dua}</h3>
+                </div>
+            );
+        }
+    }
+    
+    // 16. State Object Value Problem
+    class Latihan16 extends React.Component {
+        constructor() { super(); this.state={judul:{satu:"Belajar React", dua:"Belajar JavaScript"}}; }
+        handleClick = () => { this.setState({judul:{satu:"Belajar React State"}}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>16. State Object Value Problem</h2>
+                    <h3>{this.state.judul.satu}</h3>
+                    <h3>{this.state.judul.dua}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                    <p style={{fontStyle:"italic", color:"gray", fontSize:12}}>State.judul.dua akan hilang.</p>
+                </div>
+            );
+        }
+    }
+    
+    // 17. State Object Value Solution 1
+    class Latihan17 extends React.Component {
+        constructor() { super(); this.state={judul:{satu:"Belajar React", dua:"Belajar JavaScript"}}; }
+        handleClick = () => { this.setState({judul:{satu:"Belajar React State", dua:this.state.judul.dua}}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>17. State Object Value Solution 1</h2>
+                    <h3>{this.state.judul.satu}</h3>
+                    <h3>{this.state.judul.dua}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                    <p style={{fontStyle:"italic", color:"gray", fontSize:12}}>Update semua key secara manual.</p>
+                </div>
+            );
+        }
+    }
+    
+    // 18. State Object Value Solution 2
+    class Latihan18 extends React.Component {
+        constructor() { super(); this.state={judul:{satu:"Belajar React", dua:"Belajar JavaScript"}}; }
+        handleClick = () => { 
+            let judulObj = this.state.judul;
+            judulObj.satu = "Belajar React State";
+            this.setState({judul: judulObj});
+        }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>18. State Object Value Solution 2</h2>
+                    <h3>{this.state.judul.satu}</h3>
+                    <h3>{this.state.judul.dua}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                </div>
+            );
+        }
+    }
+    
+    // 19. State Object Value Solution 3 (Spread Operator)
+    class Latihan19 extends React.Component {
+        constructor() { super(); this.state={judul:{satu:"Belajar React", dua:"Belajar JavaScript"}}; }
+        handleClick = () => { this.setState({judul:{...this.state.judul, satu:"Belajar React State"}}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>19. State Object Value Solution 3</h2>
+                    <h3>{this.state.judul.satu}</h3>
+                    <h3>{this.state.judul.dua}</h3>
+                    <button onClick={this.handleClick}>Click me</button>
+                    <p style={{fontStyle:"italic", color:"gray", fontSize:12}}>Gunakan spread operator.</p>
+                </div>
+            );
+        }
+    }
+    
+    // 20. Slide Data Mahasiswa
+    class Latihan20 extends React.Component {
+        constructor() { super(); this.state={...mahasiswas[0]}; }
+        handleClick = (index) => { this.setState({...mahasiswas[index]}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>20. Slide Data Mahasiswa</h2>
+                    <div className="flex-btns">
+                        {mahasiswas.map((m,index) => (
+                            <button key={m.id} onClick={()=>this.handleClick(index)}>{m.nama}</button>
+                        ))}
+                    </div>
+                    <Mahasiswa mahasiswa={this.state} />
+                </div>
+            );
+        }
+    }
+
+    // 21. Tukar Warna Background
+    class Latihan21 extends React.Component {
+        constructor() { super(); this.state={divClass:"merah"}; }
+        toggleColor = () => { this.setState({ divClass: this.state.divClass==="merah"?"hijau":"merah" }); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>21. Tukar Warna Background</h2>
+                    <div className={this.state.divClass + " bg-toggle"}>
+                        <button onClick={this.toggleColor}>Tukar Warna Background</button>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    // 22. Counter Click
+    class Latihan22 extends React.Component {
+        constructor() { super(); this.state={counter:0}; }
+        dec=()=>{ this.setState((p)=>({counter:p.counter-1})); }
+        inc=()=>{ this.setState((p)=>({counter:p.counter+1})); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>22. Counter Click</h2>
+                    <div className="counter">{this.state.counter}</div>
+                    <div className="flex-btns">
+                        <button onClick={this.dec}>- 1</button>
+                        <button onClick={this.inc}>+ 1</button>
+                    </div>
+                </div>
+            );
+        }
+    }
+    
+    // 23. Counter Reset
+    class Latihan23 extends React.Component {
+        constructor() { super(); this.state={counter:0}; }
+        reset=()=>{ this.setState({counter:0}); }
+        inc=()=>{ this.setState((p)=>({counter:p.counter+1})); }
+        dec=()=>{ this.setState((p)=>({counter:p.counter-1})); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>23. Counter Reset</h2>
+                    <div className="counter">{this.state.counter}</div>
+                    <div className="flex-btns">
+                        <button onClick={this.dec}>-1</button>
+                        <button onClick={this.inc}>+1</button>
+                        <button onClick={this.reset}>Reset</button>
+                    </div>
+                </div>
+            );
+        }
+    }
+    
+    // 24. Counter Double
+    class Latihan24 extends React.Component {
+        constructor() { super(); this.state={counter:1}; }
+        double=()=>{ this.setState((p)=>({counter:p.counter*2})); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>24. Counter Double</h2>
+                    <div className="counter">{this.state.counter}</div>
+                    <button onClick={this.double}>Double</button>
+                </div>
+            );
+        }
+    }
+    
+    // 25. Counter Halve
+    class Latihan25 extends React.Component {
+        constructor() { super(); this.state={counter:64}; }
+        halve=()=>{ this.setState((p)=>({counter:p.counter/2})); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>25. Counter Halve</h2>
+                    <div className="counter">{this.state.counter}</div>
+                    <button onClick={this.halve}>Halve</button>
+                </div>
+            );
+        }
+    }
+    
+    // 26. Random Mahasiswa
+    class Latihan26 extends React.Component {
+        constructor() { super(); this.state=mahasiswas[0]; }
+        randomize=()=> {
+            const r = mahasiswas[Math.floor(Math.random()*mahasiswas.length)];
+            this.setState(r);
+        }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>26. Random Mahasiswa</h2>
+                    <Mahasiswa mahasiswa={this.state} />
+                    <button onClick={this.randomize}>Random Mahasiswa</button>
+                </div>
+            );
+        }
+    }
+    
+    // 27. Slide Next / Prev Mahasiswa
+    class Latihan27 extends React.Component {
+        constructor() { super(); this.state={index:0}; }
+        next=()=>{ this.setState((p)=>({index:(p.index+1)%mahasiswas.length})); }
+        prev=()=>{ this.setState((p)=>({index:(p.index-1+mahasiswas.length)%mahasiswas.length})); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>27. Slide Next / Prev Mahasiswa</h2>
+                    <Mahasiswa mahasiswa={mahasiswas[this.state.index]} />
+                    <div className="flex-btns">
+                        <button onClick={this.prev}>Prev</button>
+                        <button onClick={this.next}>Next</button>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    // 28. Toggle Show / Hide Mahasiswa
+    class Latihan28 extends React.Component {
+        constructor() { super(); this.state={visible:true}; }
+        toggle=()=>{ this.setState((p)=>({visible:!p.visible})); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>28. Toggle Show / Hide Mahasiswa</h2>
+                    <button onClick={this.toggle}>{this.state.visible?"Hide":"Show"}</button>
+                    {this.state.visible && <Mahasiswa mahasiswa={mahasiswas[0]} />}
+                </div>
+            );
+        }
+    }
+
+    // 29. List Mahasiswa
+    class Latihan29 extends React.Component {
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>29. List Mahasiswa</h2>
+                    {mahasiswas.map(m=><Mahasiswa key={m.id} mahasiswa={m} />)}
+                </div>
+            );
+        }
+    }
+
+    // 30. Filter Mahasiswa by Jurusan
+    class Latihan30 extends React.Component {
+        constructor() { super(); this.state={filter:""}; }
+        setFilter=(e)=>{ this.setState({filter:e.target.value}); }
+        render() {
+            const filtered = mahasiswas.filter(m=>m.jurusan.toLowerCase().includes(this.state.filter.toLowerCase()));
+            return (
+                <div className="section-content">
+                    <h2>30. Filter Mahasiswa by Jurusan</h2>
+                    <input type="text" placeholder="Cari jurusan..." onChange={this.setFilter} />
+                    {filtered.map(m=><Mahasiswa key={m.id} mahasiswa={m} />)}
+                </div>
+            );
+        }
+    }
+
+    // 31. Count Mahasiswa
+    class Latihan31 extends React.Component {
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>31. Count Mahasiswa</h2>
+                    <p>Total Mahasiswa: {mahasiswas.length}</p>
+                </div>
+            );
+        }
+    }
+
+    // 32. Reverse List Mahasiswa
+    class Latihan32 extends React.Component {
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>32. Reverse List Mahasiswa</h2>
+                    {mahasiswas.slice().reverse().map(m=><Mahasiswa key={m.id} mahasiswa={m} />)}
+                </div>
+            );
+        }
+    }
+
+    // 33. Sort Mahasiswa by Nama
+    class Latihan33 extends React.Component {
+        render() {
+            const sorted = mahasiswas.slice().sort((a,b)=>a.nama.localeCompare(b.nama));
+            return (
+                <div className="section-content">
+                    <h2>33. Sort Mahasiswa by Nama</h2>
+                    {sorted.map(m=><Mahasiswa key={m.id} mahasiswa={m} />)}
+                </div>
+            );
+        }
+    }
+
+    // 34. Add Mahasiswa (Dummy)
+    class Latihan34 extends React.Component {
+        constructor() { super(); this.state={list:mahasiswas}; }
+        add=()=>{ this.setState({list:[...this.state.list,{id:"99",nama:"New Mahasiswa",jurusan:"Baru",pasFoto:"https://randomuser.me/api/portraits/lego/1.jpg"}]}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>34. Add Mahasiswa (Dummy)</h2>
+                    <button onClick={this.add}>Tambah Mahasiswa</button>
+                    {this.state.list.map(m=><Mahasiswa key={m.id} mahasiswa={m} />)}
+                </div>
+            );
+        }
+    }
+
+    // 35. Remove Last Mahasiswa
+    class Latihan35 extends React.Component {
+        constructor() { super(); this.state={list:mahasiswas}; }
+        remove=()=>{ this.setState({list:this.state.list.slice(0,-1)}); }
+        render() {
+            return (
+                <div className="section-content">
+                    <h2>35. Remove Last Mahasiswa</h2>
+                    <button onClick={this.remove}>Hapus Terakhir</button>
+                    {this.state.list.map(m=><Mahasiswa key={m.id} mahasiswa={m} />)}
+                </div>
+            );
+        }
+    }
+
+    // ===============================================
+    // Main App Component untuk me-render semua latihan
+    // ===============================================
+    const latihanComponents = [
+        Latihan01, Latihan02, Latihan03, Latihan04, Latihan05, Latihan06, Latihan07, Latihan08, Latihan09, Latihan10,
+        Latihan11, Latihan12, Latihan13, Latihan14, Latihan15, Latihan16, Latihan17, Latihan18, Latihan19, Latihan20,
+        Latihan21, Latihan22, Latihan23, Latihan24, Latihan25, Latihan26, Latihan27, Latihan28, Latihan29, Latihan30,
+        Latihan31, Latihan32, Latihan33, Latihan34, Latihan35
+    ];
+    
+    ReactDOM.render(
+        <div>
+            {latihanComponents.map((Component, idx) => (
+                <div className="bab-section" key={"latihan"+(idx+1)}>
+                    <Component />
+                </div>
+            ))}
+        </div>,
+        document.getElementById("root")
+    );
+
+    </script>
+</body>
+</html>
