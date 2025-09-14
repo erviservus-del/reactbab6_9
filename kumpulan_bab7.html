@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kumpulan Contoh React Bab 7 - Event</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1 { text-align: center; }
+    h2 { margin-top: 30px; font-size: 18px; }
+    section { margin-bottom: 25px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    button { margin: 5px; padding: 8px 15px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1> React Bab 7 - Event</h1>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    function renderPage(){
+      const hash = window.location.hash.replace("#","");
+      let element = [];
+
+      // 01 Event Inline
+      const App1 = () => (
+        <section>
+          <h2>01. Event Inline</h2>
+          <button onClick={() => alert("Hello React")}>Click Me</button>
+        </section>
+      );
+
+      // 02 Event Handler
+      class App2 extends React.Component {
+        handleClick(){ alert("Hello React"); }
+        render(){ return (
+          <section>
+            <h2>02. Event Handler</h2>
+            <button onClick={this.handleClick}>Click Me</button>
+          </section>
+        );}
+      }
+
+      // 03 Event Component
+      class Tombol3 extends React.Component {
+        handleClick(){ alert("Hello React"); }
+        render(){ return <button onClick={this.handleClick}>Click Me</button>; }
+      }
+      const App3 = () => (
+        <section>
+          <h2>03. Event Component</h2>
+          <Tombol3/>
+        </section>
+      );
+
+      // 04 Event Props Problem
+      class Tombol4 extends React.Component {
+        handleClick(){ alert(this.props.pesan); }
+        render(){ return (
+          <button onClick={this.handleClick} style={{margin:"5px"}}>
+            {this.props.children}
+          </button>
+        );}
+      }
+      const App4 = () => (
+        <section>
+          <h2>04. Event Props Problem</h2>
+          <Tombol4 pesan="Belajar React">React</Tombol4>
+          <Tombol4 pesan="Belajar JavaScript">JavaScript</Tombol4>
+        </section>
+      );
+
+      // 05 Event Bind Inline
+      class Tombol5 extends React.Component {
+        handleClick(){ alert(this.props.pesan); }
+        render(){ return (
+          <button onClick={this.handleClick.bind(this)} style={{margin:"5px"}}>
+            {this.props.children}
+          </button>
+        );}
+      }
+      const App5 = () => (
+        <section>
+          <h2>05. Event Bind Inline</h2>
+          <Tombol5 pesan="Belajar React">React</Tombol5>
+        </section>
+      );
+
+      // 06 Event Bind Inline This
+      class Tombol6 extends React.Component {
+        handleClick(){ alert(this.props.pesan); }
+        render(){ return (
+          <button onClick={() => this.handleClick()} style={{margin:"5px"}}>
+            {this.props.children}
+          </button>
+        );}
+      }
+      const App6 = () => (
+        <section>
+          <h2>06. Event Bind Inline This</h2>
+          <Tombol6 pesan="Belajar React">React</Tombol6>
+        </section>
+      );
+
+      // 07 Event Bind Constructor
+      class Tombol7 extends React.Component {
+        constructor(){
+          super();
+          this.handleClick = this.handleClick.bind(this);
+        }
+        handleClick(){ alert(this.props.pesan); }
+        render(){ return (
+          <button onClick={this.handleClick} style={{margin:"5px"}}>
+            {this.props.children}
+          </button>
+        );}
+      }
+      const App7 = () => (
+        <section>
+          <h2>07. Event Bind Constructor</h2>
+          <Tombol7 pesan="Belajar React">React</Tombol7>
+        </section>
+      );
+
+      // 08 Event Bind Class Property
+      class Tombol8 extends React.Component {
+        handleClick = () => { alert(this.props.pesan); }
+        render(){ return (
+          <button onClick={this.handleClick} style={{margin:"5px"}}>
+            {this.props.children}
+          </button>
+        );}
+      }
+      const App8 = () => (
+        <section>
+          <h2>08. Event Bind Class Property</h2>
+          <Tombol8 pesan="Belajar React">React</Tombol8>
+        </section>
+      );
+
+      // 09 Event Object (JS Native)
+      const App9 = () => (
+        <section>
+          <h2>09. Event Object (JS Native)</h2>
+          <h3 id="judul9">Belajar JavaScript</h3>
+        </section>
+      );
+      setTimeout(()=>{
+        const node = document.getElementById("judul9");
+        if(node){
+          node.addEventListener("click",(e)=>{console.log(e);});
+        }
+      },500);
+
+      // 10 Event Target (JS Native)
+      const App10 = () => (
+        <section>
+          <h2>10. Event Target (JS Native)</h2>
+          <h3 id="judul10">Belajar JavaScript</h3>
+        </section>
+      );
+      setTimeout(()=>{
+        const node = document.getElementById("judul10");
+        if(node){
+          node.addEventListener("click",(e)=>{console.log(e.target);});
+        }
+      },500);
+
+      // 11 Event Object React
+      class Tombol11 extends React.Component {
+        handleClick = (event) => {
+          console.log(this);
+          console.log(event);
+          console.log(event.target);
+          console.log(event.target.innerHTML);
+        }
+        render(){ return (
+          <button onClick={this.handleClick} style={{margin:"5px"}}>
+            {this.props.children}
+          </button>
+        );}
+      }
+      const App11 = () => (
+        <section>
+          <h2>11. Event Object React</h2>
+          <Tombol11>React</Tombol11>
+          <Tombol11>JavaScript</Tombol11>
+        </section>
+      );
+
+      // 12 Event Passing Down
+      class Tombol12 extends React.Component {
+        render(){ return (
+          <button onClick={this.props.onTombolClick}>Click Me</button>
+        );}
+      }
+      class App12 extends React.Component {
+        handleClick = () => { alert("Alert dari MyApp"); }
+        render(){ return (
+          <section>
+            <h2>12. Event Passing Down</h2>
+            <Tombol12 onTombolClick={this.handleClick}/>
+          </section>
+        );}
+      }
+
+      // 13 Functional Event
+      const Tombol13 = (props) => {
+        const handleClick = () => { alert(props.pesan); }
+        return <button onClick={handleClick} style={{margin:"5px"}}>{props.children}</button>;
+      }
+      const App13 = () => (
+        <section>
+          <h2>13. Functional Event</h2>
+          <Tombol13 pesan="Belajar React">React</Tombol13>
+          <Tombol13 pesan="Belajar JavaScript">JavaScript</Tombol13>
+        </section>
+      );
+
+      // 14 Function Event Object
+      const Tombol14 = (props) => {
+        const handleClick = (event) => {
+          console.log(event);
+          console.log(event.target);
+          console.log(event.target.innerHTML);
+        }
+        return <button onClick={handleClick} style={{margin:"5px"}}>{props.children}</button>;
+      }
+      const App14 = () => (
+        <section>
+          <h2>14. Function Event Object</h2>
+          <Tombol14>React</Tombol14>
+          <Tombol14>JavaScript</Tombol14>
+        </section>
+      );
+
+      // 15 Function Event Passing Down
+      const Tombol15 = (props) => (
+        <button onClick={props.onTombolClick}>Click Me</button>
+      );
+      const App15 = () => {
+        const handleClick = () => { alert("Alert dari MyApp"); }
+        return (
+          <section>
+            <h2>15. Function Event Passing Down</h2>
+            <Tombol15 onTombolClick={handleClick}/>
+          </section>
+        );
+      }
+
+      // tampilkan semua atau salah satu
+      const all = [<App1/>,<App2/>,<App3/>,<App4/>,<App5/>,<App6/>,<App7/>,<App8/>,<App9/>,<App10/>,<App11/>,<App12/>,<App13/>,<App14/>,<App15/>];
+
+      if(hash && !isNaN(hash)){
+        element = all[parseInt(hash)-1];
+      } else {
+        element = all;
+      }
+
+      ReactDOM.render(<div>{element}</div>, document.getElementById("root"));
+    }
+
+    window.addEventListener("hashchange", renderPage);
+    renderPage();
+
+  </script>
+</body>
+</html>

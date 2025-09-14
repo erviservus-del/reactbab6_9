@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kumpulan Contoh React Bab 6 - Props</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1 { text-align:center; margin-bottom:20px; }
+    nav { margin-bottom:20px; }
+    nav a { display:block; margin: 2px 0; text-decoration:none; color:#0366d6; }
+    .card { border:1px solid #ddd; padding:15px; border-radius:8px; margin:15px 0; box-shadow:2px 2px 5px rgba(0,0,0,0.1); }
+    .card h2 { margin-top:0; font-size:18px; }
+    figure { margin: 10px; }
+    img { width:120px; height:140px; object-fit:cover; border-radius:8px; }
+    .mahasiswa-list { display:flex; gap:20px; text-align:center; justify-content:center; flex-wrap:wrap; }
+  </style>
+</head>
+<body>
+  <h1>React Bab 6 - Props</h1>
+  <nav>
+    <a href="#1">01. Props 1</a>
+    <a href="#2">02. Props 2 (console.log)</a>
+    <a href="#3">03. Multiple Component</a>
+    <a href="#4">04. Props Mahasiswa</a>
+    <a href="#5">05. Props Mahasiswas (Array)</a>
+    <a href="#6">06. Props Children</a>
+    <a href="#7">07. Constructor Problem</a>
+    <a href="#8">08. Constructor Solution</a>
+    <a href="#9">09. Function Props</a>
+    <a href="#10">10. Function Mahasiswas</a>
+  </nav>
+  <hr/>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Komponen dasar
+    class Belajar extends React.Component {
+      render(){ return <h3>Sedang Belajar {this.props.materi}</h3>; }
+    }
+
+    class Mahasiswa extends React.Component {
+      render(){
+        return (
+          <figure>
+            <img src={this.props.pasFoto} alt={this.props.nama}/>
+            <figcaption>{this.props.nama} ({this.props.jurusan})</figcaption>
+          </figure>
+        );
+      }
+    }
+
+    const MahasiswaF = (props) => (
+      <figure>
+        <img src={props.pasFoto} alt={props.nama}/>
+        <figcaption>{props.nama} ({props.jurusan})</figcaption>
+      </figure>
+    );
+
+    // Data Dummy
+    const mahasiswaSingle = { nama:"Lisa", jurusan:"Sistem Informasi", pasFoto:"https://randomuser.me/api/portraits/women/44.jpg" };
+    const mahasiswas = [
+      {id:"01", nama:"Eka", jurusan:"Teknik Informatika", pasFoto:"https://randomuser.me/api/portraits/men/32.jpg"},
+      {id:"02", nama:"Lisa", jurusan:"Sistem Informasi", pasFoto:"https://randomuser.me/api/portraits/women/44.jpg"},
+      {id:"03", nama:"Rudi", jurusan:"Teknik Elektro", pasFoto:"https://randomuser.me/api/portraits/men/35.jpg"},
+    ];
+
+    // Halaman berdasarkan hash
+    function renderPage(){
+      let hash = window.location.hash.replace("#","");
+      let contents = [];
+
+      const addCard = (title, content) => {
+        contents.push(<div className="card"><h2>{title}</h2>{content}</div>);
+      };
+
+      if(hash==="" || hash==="1"){
+        addCard("01. Props 1", <Belajar materi="React" />);
+      }
+      if(hash==="" || hash==="2"){
+        class Belajar2 extends React.Component {
+          render(){
+            console.log(this.props);
+            return <h3>Sedang Belajar {this.props.materi}</h3>;
+          }
+        }
+        addCard("02. Props 2 (console.log)", <Belajar2 materi="React" id="01" className="judul"/>);
+      }
+      if(hash==="" || hash==="3"){
+        addCard("03. Multiple Component", 
+          <div>
+            <Belajar materi="React"/>
+            <Belajar materi="JavaScript"/>
+            <Belajar materi="Programmer"/>
+          </div>
+        );
+      }
+      if(hash==="" || hash==="4"){
+        addCard("04. Props Mahasiswa", 
+          <Mahasiswa {...mahasiswaSingle} />
+        );
+      }
+      if(hash==="" || hash==="5"){
+        addCard("05. Props Mahasiswas (Array)", 
+          <div>
+            <h3>Daftar Mahasiswa - Universitas Ilkoom</h3>
+            <div className="mahasiswa-list">
+              {mahasiswas.map(m=><Mahasiswa key={m.id} {...m}/>)}
+            </div>
+          </div>
+        );
+      }
+      if(hash==="" || hash==="6"){
+        class Belajar6 extends React.Component {
+          render(){ return <h3 id={this.props.id}>Sedang Belajar {this.props.children}</h3>; }
+        }
+        addCard("06. Props Children", <Belajar6 id="01">React</Belajar6>);
+      }
+      if(hash==="" || hash==="7"){
+        class Belajar7 extends React.Component {
+          constructor(){
+            super();
+            this.judul = this.props.materi.toUpperCase();
+          }
+          render(){ return <h3>Sedang Belajar {this.judul}</h3>; }
+        }
+        addCard("07. Constructor Problem", <Belajar7 materi="React"/>);
+      }
+      if(hash==="" || hash==="8"){
+        class Belajar8 extends React.Component {
+          constructor(props){
+            super(props);
+            this.judul = this.props.materi.toUpperCase();
+          }
+          render(){ return <h3>Sedang Belajar {this.judul}</h3>; }
+        }
+        addCard("08. Constructor Solution", <Belajar8 materi="React"/>);
+      }
+      if(hash==="" || hash==="9"){
+        const Belajar9 = (props) => <h3>Sedang Belajar {props.materi}</h3>;
+        addCard("09. Function Props", 
+          <div>
+            <Belajar9 materi="React"/>
+            <Belajar9 materi="JavaScript"/>
+            <Belajar9 materi="Programmer"/>
+          </div>
+        );
+      }
+      if(hash==="" || hash==="10"){
+        addCard("10. Function Mahasiswas",
+          <div>
+            <h3>Daftar Mahasiswa - Universitas Ilkoom</h3>
+            <div className="mahasiswa-list">
+              {mahasiswas.map(m=><MahasiswaF key={m.id} {...m}/>)}
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.render(<div>{contents}</div>, document.getElementById("root"));
+    }
+
+    window.addEventListener("hashchange", renderPage);
+    renderPage();
+  </script>
+</body>
+</html>
